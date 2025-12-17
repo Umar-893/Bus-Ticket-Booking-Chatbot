@@ -3,7 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BusGo - Smart Bus Ticketing</title>
+    <title>Team 39 - Premium Bus Services</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;900&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -11,789 +14,883 @@
             box-sizing: border-box;
         }
 
+        :root {
+            --primary: #0A2463;
+            --secondary: #FB3640;
+            --accent: #247BA0;
+            --gold: #E6AF2E;
+            --light: #F8F9FA;
+            --dark: #1A1A2E;
+            --gradient: linear-gradient(135deg, #0A2463 0%, #247BA0 100%);
+            --gradient-warm: linear-gradient(135deg, #FB3640 0%, #E6AF2E 100%);
+        }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #f5f7fa;
-            min-height: 100vh;
+            font-family: 'DM Sans', sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            overflow-x: hidden;
+            background: var(--light);
+        }
+
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 900;
+            line-height: 1.2;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Home Page Styles */
+        .home-page {
+            display: block;
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        .home-page.active {
+            display: block;
         }
 
         /* Header */
         .header {
             background: white;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem 0;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05);
             position: sticky;
             top: 0;
             z-index: 100;
+            animation: slideDown 0.6s ease-out;
         }
 
-        .top-bar {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 10px 50px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 14px;
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-100%);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
-        .top-bar-left, .top-bar-right {
-            display: flex;
-            gap: 20px;
-            align-items: center;
-        }
-
-        .navbar {
-            padding: 20px 50px;
+        .header-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
         .logo {
-            font-size: 32px;
-            font-weight: bold;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-size: 2rem;
+            font-weight: 900;
+            background: var(--gradient);
             -webkit-background-clip: text;
+            background-clip: text;
             -webkit-text-fill-color: transparent;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            letter-spacing: -1px;
         }
 
-        .nav-links {
+        .nav {
             display: flex;
-            gap: 35px;
+            gap: 2.5rem;
             align-items: center;
         }
 
-        .nav-links a {
-            color: #333;
+        .nav-link {
+            color: var(--dark);
             text-decoration: none;
             font-weight: 500;
-            transition: color 0.3s;
             position: relative;
+            transition: color 0.3s ease;
         }
 
-        .nav-links a:hover {
-            color: #667eea;
-        }
-
-        .nav-links a::after {
+        .nav-link::after {
             content: '';
             position: absolute;
             bottom: -5px;
             left: 0;
             width: 0;
             height: 2px;
-            background: #667eea;
-            transition: width 0.3s;
+            background: var(--secondary);
+            transition: width 0.3s ease;
         }
 
-        .nav-links a:hover::after {
+        .nav-link:hover {
+            color: var(--secondary);
+        }
+
+        .nav-link:hover::after {
             width: 100%;
         }
 
-        .auth-buttons {
-            display: flex;
-            gap: 15px;
-        }
-
-        .login-btn, .signup-btn {
-            padding: 10px 25px;
-            border: none;
-            border-radius: 8px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .login-btn {
-            background: transparent;
-            color: #667eea;
-            border: 2px solid #667eea;
-        }
-
-        .login-btn:hover {
-            background: #667eea;
-            color: white;
-        }
-
-        .signup-btn {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-        }
-
-        .signup-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
-        }
-
-        /* Main Content */
-        .main-content {
-            padding: 40px 50px;
-            max-width: 1400px;
-            width: 100%;
-            margin: 0 auto;
-        }
-
-        .hero-section {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 20px;
-            padding: 60px;
-            color: white;
-            text-align: center;
-            margin-bottom: 40px;
+        /* Hero Section */
+        .hero {
             position: relative;
+            height: 90vh;
+            min-height: 600px;
+            display: flex;
+            align-items: center;
             overflow: hidden;
+            background: linear-gradient(135deg, rgba(10, 36, 99, 0.95) 0%, rgba(36, 123, 160, 0.9) 100%);
         }
 
-        .hero-section::before {
-            content: '';
+        .hero-bg {
             position: absolute;
-            top: -50%;
-            right: -10%;
-            width: 500px;
-            height: 500px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
+            animation: kenBurns 20s ease-in-out infinite alternate;
         }
 
-        .hero-section::after {
-            content: '';
+        @keyframes kenBurns {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.1); }
+        }
+
+        .hero-overlay {
             position: absolute;
-            bottom: -30%;
-            left: -5%;
-            width: 400px;
-            height: 400px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(10, 36, 99, 0.9) 0%, rgba(36, 123, 160, 0.85) 100%);
+            z-index: 1;
         }
 
         .hero-content {
             position: relative;
-            z-index: 1;
+            z-index: 2;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            color: white;
         }
 
-        .hero-section h1 {
-            font-size: 48px;
-            margin-bottom: 15px;
+        .hero-title {
+            font-size: clamp(3rem, 8vw, 6rem);
+            margin-bottom: 1.5rem;
+            animation: fadeInUp 1s ease-out;
+            text-shadow: 2px 4px 8px rgba(0, 0, 0, 0.3);
         }
 
-        .hero-section p {
-            font-size: 20px;
+        .hero-subtitle {
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
+            margin-bottom: 2.5rem;
             opacity: 0.95;
-            margin-bottom: 30px;
+            animation: fadeInUp 1s ease-out 0.2s backwards;
+            max-width: 700px;
         }
 
-        .hero-stats {
+        .hero-cta {
             display: flex;
-            justify-content: center;
-            gap: 50px;
-            margin-top: 30px;
+            gap: 1.5rem;
+            animation: fadeInUp 1s ease-out 0.4s backwards;
+            flex-wrap: wrap;
+        }
+
+        .btn-hero {
+            padding: 1.2rem 2.5rem;
+            font-size: 1.1rem;
+            font-weight: 700;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'DM Sans', sans-serif;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-hero-primary {
+            background: var(--secondary);
+            color: white;
+        }
+
+        .btn-hero-primary:hover {
+            background: #d32f39;
+            transform: translateY(-4px);
+            box-shadow: 0 15px 40px rgba(251, 54, 64, 0.4);
+        }
+
+        .btn-hero-secondary {
+            background: white;
+            color: var(--primary);
+        }
+
+        .btn-hero-secondary:hover {
+            background: var(--gold);
+            color: white;
+            transform: translateY(-4px);
+            box-shadow: 0 15px 40px rgba(230, 175, 46, 0.4);
+        }
+
+        /* Section Styles */
+        .section {
+            padding: 6rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            text-align: center;
+            margin-bottom: 1rem;
+            color: var(--primary);
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--gradient-warm);
+            border-radius: 2px;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 4rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* About Section */
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            margin-top: 3rem;
+        }
+
+        .about-text {
+            animation: fadeInLeft 1s ease-out;
+        }
+
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .about-text h3 {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+
+        .about-text p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 1.5rem;
+        }
+
+        .about-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 2rem;
         }
 
         .stat-item {
             text-align: center;
+            padding: 1.5rem;
+            background: var(--light);
+            border-radius: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .stat-item:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
         }
 
         .stat-number {
-            font-size: 36px;
-            font-weight: bold;
-            display: block;
+            font-size: 2.5rem;
+            font-weight: 900;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
         }
 
         .stat-label {
-            font-size: 14px;
-            opacity: 0.9;
-        }
-
-        .content-grid {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 30px;
-            margin-bottom: 40px;
-        }
-
-        .booking-section {
-            background: white;
-            border-radius: 15px;
-            padding: 30px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .section-title {
-            font-size: 24px;
-            color: #333;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .booking-form {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
-        }
-
-        .input-group {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .input-group label {
-            margin-bottom: 8px;
-            color: #555;
-            font-weight: 500;
-            font-size: 14px;
-        }
-
-        .input-group input, .input-group select {
-            padding: 12px;
-            border: 2px solid #e0e0e0;
-            border-radius: 10px;
-            font-size: 14px;
-            transition: border 0.3s;
-        }
-
-        .input-group input:focus, .input-group select:focus {
-            outline: none;
-            border-color: #667eea;
-        }
-
-        .search-btn {
-            grid-column: 1 / -1;
-            padding: 14px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: transform 0.2s;
-        }
-
-        .search-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
-        }
-
-        /* Chatbot Integration Area */
-        .chatbot-section {
-            background: white;
-            border-radius: 15px;
-            padding: 30px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            display: flex;
-            flex-direction: column;
-        }
-
-        .chatbot-container {
-            flex: 1;
-            border: 2px dashed #e0e0e0;
-            border-radius: 10px;
-            padding: 30px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            min-height: 400px;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-        }
-
-        .chatbot-icon {
-            font-size: 64px;
-            margin-bottom: 20px;
-            animation: float 3s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-
-        .chatbot-container h3 {
-            color: #667eea;
-            margin-bottom: 10px;
-            font-size: 22px;
-        }
-
-        .chatbot-container p {
+            font-size: 0.9rem;
             color: #666;
-            font-size: 14px;
-            margin-bottom: 20px;
-            line-height: 1.6;
-        }
-
-        .integrate-btn {
-            padding: 12px 30px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            border-radius: 10px;
             font-weight: 600;
-            cursor: pointer;
-            transition: transform 0.2s;
         }
 
-        .integrate-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        .about-image {
+            position: relative;
+            animation: fadeInRight 1s ease-out;
         }
 
-        /* Features Grid */
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 25px;
-            margin-bottom: 40px;
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
         }
 
-        .feature-card {
-            background: white;
-            padding: 25px;
-            border-radius: 15px;
-            text-align: center;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s;
-            border: 2px solid transparent;
+        .about-image img {
+            width: 100%;
+            height: 500px;
+            object-fit: cover;
+            border-radius: 24px;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.15);
         }
 
-        .feature-card:hover {
-            transform: translateY(-5px);
-            border-color: #667eea;
-            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.2);
-        }
-
-        .feature-icon {
-            font-size: 40px;
-            margin-bottom: 15px;
-        }
-
-        .feature-card h3 {
-            color: #667eea;
-            margin-bottom: 8px;
-            font-size: 16px;
-        }
-
-        .feature-card p {
-            color: #666;
-            font-size: 13px;
-        }
-
-        /* Popular Routes Section */
+        /* Routes Section */
         .routes-section {
-            background: white;
-            border-radius: 15px;
-            padding: 40px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            margin-bottom: 40px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 6rem 2rem;
         }
 
         .routes-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-            margin-top: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+            max-width: 1400px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .route-card {
-            background: #f9f9f9;
-            padding: 20px;
-            border-radius: 10px;
-            border-left: 4px solid #667eea;
-            transition: all 0.3s;
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            transition: all 0.4s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .route-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--gradient);
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+
+        .route-card:hover::before {
+            transform: scaleX(1);
         }
 
         .route-card:hover {
-            background: #667eea;
-            color: white;
-            transform: translateX(5px);
+            transform: translateY(-12px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
         }
 
-        .route-card h4 {
-            margin-bottom: 10px;
-            font-size: 18px;
+        .route-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--gradient);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
         }
 
-        .route-info {
+        .route-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .route-details {
             display: flex;
             justify-content: space-between;
-            font-size: 14px;
-            opacity: 0.8;
+            align-items: center;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .route-detail-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .route-detail-label {
+            font-size: 0.8rem;
+            color: #666;
+            margin-bottom: 0.3rem;
+        }
+
+        .route-detail-value {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--dark);
         }
 
         /* Footer */
         .footer {
-            background: #2c3e50;
+            background: var(--dark);
             color: white;
-            padding: 50px 50px 20px;
-            margin-top: auto;
+            padding: 3rem 2rem 1.5rem;
+            animation: fadeIn 1s ease-out;
         }
 
         .footer-content {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 40px;
             max-width: 1400px;
-            margin: 0 auto 40px;
-        }
-
-        .footer-section h3 {
-            margin-bottom: 20px;
-            font-size: 18px;
-        }
-
-        .footer-section ul {
-            list-style: none;
-        }
-
-        .footer-section ul li {
-            margin-bottom: 10px;
-        }
-
-        .footer-section ul li a {
-            color: #bdc3c7;
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-
-        .footer-section ul li a:hover {
-            color: white;
-        }
-
-        .footer-section p {
-            color: #bdc3c7;
-            line-height: 1.6;
-            font-size: 14px;
-        }
-
-        .social-links {
+            margin: 0 auto;
             display: flex;
-            gap: 15px;
-            margin-top: 15px;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 2rem;
         }
 
-        .social-links a {
-            width: 40px;
-            height: 40px;
-            background: #34495e;
+        .footer-logo {
+            font-size: 2rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #fff 0%, var(--gold) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-icon {
+            width: 45px;
+            height: 45px;
+            background: rgba(255, 255, 255, 0.1);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
             text-decoration: none;
-            transition: background 0.3s;
-            font-size: 20px;
+            transition: all 0.3s ease;
+            font-size: 1.2rem;
         }
 
-        .social-links a:hover {
-            background: #667eea;
+        .social-icon:hover {
+            background: var(--secondary);
+            transform: translateY(-5px) rotate(5deg);
         }
 
         .footer-bottom {
-            border-top: 1px solid #34495e;
-            padding-top: 20px;
             text-align: center;
-            color: #bdc3c7;
-            font-size: 14px;
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            opacity: 0.7;
+            font-size: 0.9rem;
         }
 
-        /* Responsive */
-        @media (max-width: 1024px) {
-            .content-grid {
+        /* Mobile Menu */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--dark);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 968px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .nav {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: white;
+                flex-direction: column;
+                padding: 2rem;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            }
+
+            .nav.active {
+                display: flex;
+            }
+
+            .about-content {
                 grid-template-columns: 1fr;
             }
 
-            .features-grid {
-                grid-template-columns: repeat(2, 1fr);
+            .about-stats {
+                grid-template-columns: 1fr;
             }
 
             .routes-grid {
-                grid-template-columns: repeat(2, 1fr);
+                grid-template-columns: 1fr;
             }
 
             .footer-content {
-                grid-template-columns: repeat(2, 1fr);
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .hero-cta {
+                justify-content: center;
             }
         }
 
-        @media (max-width: 768px) {
-            .navbar, .top-bar, .main-content, .footer {
-                padding-left: 20px;
-                padding-right: 20px;
+        @media (max-width: 640px) {
+            .section {
+                padding: 4rem 1rem;
             }
 
-            .nav-links {
-                display: none;
+            .hero-title {
+                font-size: 2.5rem;
             }
+        }
 
-            .features-grid, .routes-grid {
-                grid-template-columns: 1fr;
-            }
+        /* Scroll Animations */
+        .scroll-animate {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
 
-            .footer-content {
-                grid-template-columns: 1fr;
-            }
-
-            .hero-section {
-                padding: 40px 30px;
-            }
-
-            .hero-section h1 {
-                font-size: 32px;
-            }
-
-            .hero-stats {
-                flex-direction: column;
-                gap: 20px;
-            }
-
-            .booking-form {
-                grid-template-columns: 1fr;
-            }
+        .scroll-animate.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
     </style>
 </head>
 <body>
-    <!-- Header -->
-    <header class="header">
-        <div class="top-bar">
-            <div class="top-bar-left">
-                <span>📞 +1-800-BUS-TICKET</span>
-                <span>✉️ support@busgo.com</span>
+    <!-- Home Page -->
+    <div class="home-page active" id="homePage">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-container">
+                <div class="logo">TEAM 39</div>
+                <button class="mobile-menu-btn" onclick="toggleMenu()">☰</button>
+                <nav class="nav" id="mainNav">
+                    <a href="#hero" class="nav-link">Home</a>
+                    <a href="#about" class="nav-link">About</a>
+                    <a href="#routes" class="nav-link">Routes</a>
+                    <a href="#contact" class="nav-link">Contact</a>
+                </nav>
             </div>
-            <div class="top-bar-right">
-                <span>24/7 Customer Support</span>
-            </div>
-        </div>
-        <nav class="navbar">
-            <div class="logo">🚌 BusGo</div>
-            <div class="nav-links">
-                <a href="#home">Home</a>
-                <a href="#booking">Book Tickets</a>
-                <a href="#routes">Routes</a>
-                <a href="#offers">Offers</a>
-                <a href="#support">Support</a>
-            </div>
-            <div class="auth-buttons">
-                <button class="login-btn">Login</button>
-                <button class="signup-btn">Sign Up</button>
-            </div>
-        </nav>
-    </header>
+        </header>
 
-    <!-- Main Content -->
-    <main class="main-content" id="home">
         <!-- Hero Section -->
-        <section class="hero-section">
+        <section class="hero" id="hero">
+            <img src="https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=1920" alt="Luxury Bus" class="hero-bg">
+            <div class="hero-overlay"></div>
             <div class="hero-content">
-                <h1>Travel Smart, Book Faster! 🚌</h1>
-                <p>Your journey begins here - Experience seamless bus booking</p>
-                <div class="hero-stats">
-                    <div class="stat-item">
-                        <span class="stat-number">500+</span>
-                        <span class="stat-label">Bus Routes</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-number">1M+</span>
-                        <span class="stat-label">Happy Travelers</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-number">24/7</span>
-                        <span class="stat-label">Support Available</span>
-                    </div>
+                <h1 class="hero-title">Journey in Comfort</h1>
+                <p class="hero-subtitle">Experience premium luxury travel across Pakistan with our modern Yutong fleet</p>
+                <div class="hero-cta">
+                    <a href="#routes" class="btn-hero btn-hero-primary">Book Your Ticket</a>
+                    <a href="#about" class="btn-hero btn-hero-secondary">Learn More</a>
                 </div>
             </div>
         </section>
 
-        <!-- Content Grid -->
-        <div class="content-grid" id="booking">
-            <!-- Booking Section -->
-            <div class="booking-section">
-                <h2 class="section-title">🎫 Quick Ticket Booking</h2>
-                <form class="booking-form" onsubmit="searchBuses(event)">
-                    <div class="input-group">
-                        <label>From</label>
-                        <input type="text" placeholder="Departure City" required>
+        <!-- About Section -->
+        <section class="section scroll-animate" id="about">
+            <h2 class="section-title">About Team 39</h2>
+            <p class="section-subtitle">Leading the way in premium bus transportation services</p>
+            
+            <div class="about-content">
+                <div class="about-text">
+                    <h3>Your Trusted Travel Partner</h3>
+                    <p>Team 39 has been serving Pakistan with pride, offering world-class bus services that combine comfort, safety, and reliability. Our fleet of modern Yutong luxury buses ensures every journey is a pleasant experience.</p>
+                    <p>With professional drivers, 24/7 customer support, and cutting-edge amenities, we're committed to making your travel seamless and enjoyable.</p>
+                    
+                    <div class="about-stats">
+                        <div class="stat-item">
+                            <div class="stat-number">500K+</div>
+                            <div class="stat-label">Happy Passengers</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">15+</div>
+                            <div class="stat-label">Major Routes</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">99%</div>
+                            <div class="stat-label">On-Time Arrival</div>
+                        </div>
                     </div>
-                    <div class="input-group">
-                        <label>To</label>
-                        <input type="text" placeholder="Destination City" required>
-                    </div>
-                    <div class="input-group">
-                        <label>Journey Date</label>
-                        <input type="date" id="journeyDate" required>
-                    </div>
-                    <div class="input-group">
-                        <label>Passengers</label>
-                        <select>
-                            <option>1 Passenger</option>
-                            <option>2 Passengers</option>
-                            <option>3 Passengers</option>
-                            <option>4 Passengers</option>
-                            <option>5+ Passengers</option>
-                        </select>
-                    </div>
-                    <button type="submit" class="search-btn">🔍 Search Buses</button>
-                </form>
-            </div>
-
-            <!-- Chatbot Integration Section -->
-            <div class="chatbot-section">
-                <h2 class="section-title">💬 AI Assistant</h2>
-                <div class="chatbot-container">
-                    <div class="chatbot-icon">🤖</div>
-                    <h3>Chatbot Integration Ready</h3>
-                    <p>This area is designed for chatbot integration.<br>You can integrate services like:</p>
-                    <p><strong>• Dialogflow • Chatfuel • ManyChat<br>• Custom AI Assistant</strong></p>
-                    <button class="integrate-btn" onclick="alert('Connect your chatbot API here!\n\nYou can integrate:\n- Dialogflow\n- Chatfuel\n- ManyChat\n- Custom chatbot widget')">Connect Chatbot</button>
+                </div>
+                
+                <div class="about-image">
+                    <img src="https://images.unsplash.com/photo-1570125909232-eb263c188f7e?w=800" alt="Team 39 Bus">
                 </div>
             </div>
-        </div>
+        </section>
 
-        <!-- Features Section -->
-        <div class="features-grid">
-            <div class="feature-card">
-                <div class="feature-icon">⚡</div>
-                <h3>Instant Booking</h3>
-                <p>Book tickets in seconds with our lightning-fast system</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">💳</div>
-                <h3>Secure Payment</h3>
-                <p>100% safe and encrypted transactions</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">🎫</div>
-                <h3>E-Tickets</h3>
-                <p>Instant digital tickets to your email</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">🌟</div>
-                <h3>Best Prices</h3>
-                <p>Guaranteed lowest fares available</p>
-            </div>
-        </div>
-
-        <!-- Popular Routes Section -->
-        <section class="routes-section" id="routes">
-            <h2 class="section-title">🗺️ Popular Routes</h2>
+        <!-- Routes Section -->
+        <section class="routes-section scroll-animate" id="routes">
+            <h2 class="section-title">Popular Routes</h2>
+            <p class="section-subtitle">Select from our most traveled routes across Pakistan</p>
+            
             <div class="routes-grid">
                 <div class="route-card">
-                    <h4>New York ➔ Boston</h4>
-                    <div class="route-info">
-                        <span>⏱️ 4-5 hours</span>
-                        <span>💵 From $25</span>
+                    <div class="route-icon">🚌</div>
+                    <div class="route-name">Lahore → Karachi</div>
+                    <div class="route-details">
+                        <div class="route-detail-item">
+                            <div class="route-detail-label">Duration</div>
+                            <div class="route-detail-value">18 hrs</div>
+                        </div>
+                        <div class="route-detail-item">
+                            <div class="route-detail-label">Fare</div>
+                            <div class="route-detail-value">PKR 4,500</div>
+                        </div>
+                        <div class="route-detail-item">
+                            <div class="route-detail-label">Daily Trips</div>
+                            <div class="route-detail-value">6</div>
+                        </div>
                     </div>
                 </div>
+
                 <div class="route-card">
-                    <h4>Los Angeles ➔ San Francisco</h4>
-                    <div class="route-info">
-                        <span>⏱️ 6-7 hours</span>
-                        <span>💵 From $35</span>
+                    <div class="route-icon">🚌</div>
+                    <div class="route-name">Karachi → Islamabad</div>
+                    <div class="route-details">
+                        <div class="route-detail-item">
+                            <div class="route-detail-label">Duration</div>
+                            <div class="route-detail-value">20 hrs</div>
+                        </div>
+                        <div class="route-detail-item">
+                            <div class="route-detail-label">Fare</div>
+                            <div class="route-detail-value">PKR 5,000</div>
+                        </div>
+                        <div class="route-detail-item">
+                            <div class="route-detail-label">Daily Trips</div>
+                            <div class="route-detail-value">4</div>
+                        </div>
                     </div>
                 </div>
+
                 <div class="route-card">
-                    <h4>Chicago ➔ Detroit</h4>
-                    <div class="route-info">
-                        <span>⏱️ 5-6 hours</span>
-                        <span>💵 From $30</span>
+                    <div class="route-icon">🚌</div>
+                    <div class="route-name">Lahore → Peshawar</div>
+                    <div class="route-details">
+                        <div class="route-detail-item">
+                            <div class="route-detail-label">Duration</div>
+                            <div class="route-detail-value">8 hrs</div>
+                        </div>
+                        <div class="route-detail-item">
+                            <div class="route-detail-label">Fare</div>
+                            <div class="route-detail-value">PKR 2,200</div>
+                        </div>
+                        <div class="route-detail-item">
+                            <div class="route-detail-label">Daily Trips</div>
+                            <div class="route-detail-value">8</div>
+                        </div>
                     </div>
                 </div>
+
                 <div class="route-card">
-                    <h4>Miami ➔ Orlando</h4>
-                    <div class="route-info">
-                        <span>⏱️ 3-4 hours</span>
-                        <span>💵 From $20</span>
+                    <div class="route-icon">🚌</div>
+                    <div class="route-name">Sialkot → Hafizabad</div>
+                    <div class="route-details">
+                        <div class="route-detail-item">
+                            <div class="route-detail-label">Duration</div>
+                            <div class="route-detail-value">3 hrs</div>
+                        </div>
+                        <div class="route-detail-item">
+                            <div class="route-detail-label">Fare</div>
+                            <div class="route-detail-value">PKR 800</div>
+                        </div>
+                        <div class="route-detail-item">
+                            <div class="route-detail-label">Daily Trips</div>
+                            <div class="route-detail-value">12</div>
+                        </div>
                     </div>
                 </div>
+
                 <div class="route-card">
-                    <h4>Seattle ➔ Portland</h4>
-                    <div class="route-info">
-                        <span>⏱️ 3-4 hours</span>
-                        <span>💵 From $22</span>
+                    <div class="route-icon">🚌</div>
+                    <div class="route-name">Multan → Quetta</div>
+                    <div class="route-details">
+                        <div class="route-detail-item">
+                            <div class="route-detail-label">Duration</div>
+                            <div class="route-detail-value">12 hrs</div>
+                        </div>
+                        <div class="route-detail-item">
+                            <div class="route-detail-label">Fare</div>
+                            <div class="route-detail-value">PKR 3,500</div>
+                        </div>
+                        <div class="route-detail-item">
+                            <div class="route-detail-label">Daily Trips</div>
+                            <div class="route-detail-value">5</div>
+                        </div>
                     </div>
                 </div>
+
                 <div class="route-card">
-                    <h4>Dallas ➔ Houston</h4>
-                    <div class="route-info">
-                        <span>⏱️ 4-5 hours</span>
-                        <span>💵 From $28</span>
+                    <div class="route-icon">🚌</div>
+                    <div class="route-name">Muzaffarabad → Hyderabad</div>
+                    <div class="route-details">
+                        <div class="route-detail-item">
+                            <div class="route-detail-label">Duration</div>
+                            <div class="route-detail-value">22 hrs</div>
+                        </div>
+                        <div class="route-detail-item">
+                            <div class="route-detail-label">Fare</div>
+                            <div class="route-detail-value">PKR 5,500</div>
+                        </div>
+                        <div class="route-detail-item">
+                            <div class="route-detail-label">Daily Trips</div>
+                            <div class="route-detail-value">3</div>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
-    </main>
 
-    <!-- Footer -->
-    <footer class="footer" id="support">
-        <div class="footer-content">
-            <div class="footer-section">
-                <h3>About BusGo</h3>
-                <p>Leading bus ticketing platform providing seamless booking experience with thousands of routes across the country.</p>
-                <div class="social-links">
-                    <a href="#" title="Facebook">📘</a>
-                    <a href="#" title="Twitter">🐦</a>
-                    <a href="#" title="Instagram">📷</a>
-                    <a href="#" title="LinkedIn">💼</a>
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-logo">TEAM 39</div>
+                <div class="footer-social">
+                    <a href="#" class="social-icon" title="Facebook">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                        </svg>
+                    </a>
+                    <a href="#" class="social-icon" title="Twitter">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+                        </svg>
+                    </a>
+                    <a href="#" class="social-icon" title="Instagram">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 0C8.74 0 8.333.015 7.053.072 5.775.132 4.905.333 4.14.63c-.789.306-1.459.717-2.126 1.384S.935 3.35.63 4.14C.333 4.905.131 5.775.072 7.053.012 8.333 0 8.74 0 12s.015 3.667.072 4.947c.06 1.277.261 2.148.558 2.913.306.788.717 1.459 1.384 2.126.667.666 1.336 1.079 2.126 1.384.766.296 1.636.499 2.913.558C8.333 23.988 8.74 24 12 24s3.667-.015 4.947-.072c1.277-.06 2.148-.262 2.913-.558.788-.306 1.459-.718 2.126-1.384.666-.667 1.079-1.335 1.384-2.126.296-.765.499-1.636.558-2.913.06-1.28.072-1.687.072-4.947s-.015-3.667-.072-4.947c-.06-1.277-.262-2.149-.558-2.913-.306-.789-.718-1.459-1.384-2.126C21.319 1.347 20.651.935 19.86.63c-.765-.297-1.636-.499-2.913-.558C15.667.012 15.26 0 12 0zm0 2.16c3.203 0 3.585.016 4.85.071 1.17.055 1.805.249 2.227.415.562.217.96.477 1.382.896.419.42.679.819.896 1.381.164.422.36 1.057.413 2.227.057 1.266.07 1.646.07 4.85s-.015 3.585-.074 4.85c-.061 1.17-.256 1.805-.421 2.227-.224.562-.479.96-.899 1.382-.419.419-.824.679-1.38.896-.42.164-1.065.36-2.235.413-1.274.057-1.649.07-4.859.07-3.211 0-3.586-.015-4.859-.074-1.171-.061-1.816-.256-2.236-.421-.569-.224-.96-.479-1.379-.899-.421-.419-.69-.824-.9-1.38-.165-.42-.359-1.065-.42-2.235-.045-1.26-.061-1.649-.061-4.844 0-3.196.016-3.586.061-4.861.061-1.17.255-1.814.42-2.234.21-.57.479-.96.9-1.381.419-.419.81-.689 1.379-.898.42-.166 1.051-.361 2.221-.421 1.275-.045 1.65-.06 4.859-.06l.045.03zm0 3.678c-3.405 0-6.162 2.76-6.162 6.162 0 3.405 2.76 6.162 6.162 6.162 3.405 0 6.162-2.76 6.162-6.162 0-3.405-2.76-6.162-6.162-6.162zM12 16c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4zm7.846-10.405c0 .795-.646 1.44-1.44 1.44-.795 0-1.44-.646-1.44-1.44 0-.794.646-1.439 1.44-1.439.793-.001 1.44.645 1.44 1.439z"/>
+                        </svg>
+                    </a>
+                    <a href="#" class="social-icon" title="WhatsApp">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+                        </svg>
+                    </a>
                 </div>
             </div>
-            <div class="footer-section">
-                <h3>Quick Links</h3>
-                <ul>
-                    <li><a href="#">About Us</a></li>
-                    <li><a href="#">Contact</a></li>
-                    <li><a href="#">Careers</a></li>
-                    <li><a href="#">Blog</a></li>
-                    <li><a href="#">Press</a></li>
-                </ul>
+            <div class="footer-bottom">
+                © 2024 Team 39. All rights reserved. | Premium Bus Services Across Pakistan
             </div>
-            <div class="footer-section">
-                <h3>Services</h3>
-                <ul>
-                    <li><a href="#">Bus Booking</a></li>
-                    <li><a href="#">Charter Services</a></li>
-                    <li><a href="#">Corporate Booking</a></li>
-                    <li><a href="#">Group Booking</a></li>
-                    <li><a href="#">Partner With Us</a></li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <h3>Support</h3>
-                <ul>
-                    <li><a href="#">Help Center</a></li>
-                    <li><a href="#">Terms & Conditions</a></li>
-                    <li><a href="#">Privacy Policy</a></li>
-                    <li><a href="#">Refund Policy</a></li>
-                    <li><a href="#">FAQ</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2024 BusGo - Smart Bus Ticketing. All rights reserved. | Made with ❤️ for travelers</p>
-        </div>
-    </footer>
+        </footer>
+    </div>
 
     <script>
-        function searchBuses(e) {
-            e.preventDefault();
-            alert('Searching for available buses... 🔍\n\nThis would connect to your backend API to fetch real bus schedules and availability.');
+        // Mobile Menu Toggle
+        function toggleMenu() {
+            document.getElementById('mainNav').classList.toggle('active');
         }
 
-        // Set minimum date to today
-        const today = new Date().toISOString().split('T')[0];
-        document.getElementById('journeyDate').setAttribute('min', today);
+        // Smooth Scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                    // Close mobile menu if open
+                    document.getElementById('mainNav').classList.remove('active');
+                }
+            });
+        });
+
+        // Scroll Animations
+        function initScrollAnimations() {
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -100px 0px'
+            };
+
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.scroll-animate').forEach(el => {
+                observer.observe(el);
+            });
+        }
+
+        // Initialize on page load
+        window.addEventListener('DOMContentLoaded', initScrollAnimations);
+
+        // Route Card Click Effect
+        document.querySelectorAll('.route-card').forEach(card => {
+            card.addEventListener('click', function() {
+                this.style.transform = 'scale(0.98)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 200);
+            });
+        });
     </script>
-  <link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
-  <script type="module">
+<link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
+<script type="module">
 	import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
 
 	createChat({
-		webhookUrl: 'https://automatiiiion.app.n8n.cloud/webhook/f2d49109-9b64-4fcf-a86b-91001a6a2a7f/chat'
+		webhookUrl: 'https://aizs.app.n8n.cloud/webhook/f2d49109-9b64-4fcf-a86b-91001a6a2a7f/chat'
 	});
 </script>
 </body>
